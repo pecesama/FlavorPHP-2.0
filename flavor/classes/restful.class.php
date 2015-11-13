@@ -48,13 +48,18 @@ abstract class restful extends controller {
         }
     }
 	
-	protected function response($data, $status = 200) {
-		header("Access-Control-Allow-Orgin: *");
-		header("Access-Control-Allow-Methods: *");
-		header("Content-Type: application/json");
+	protected function response($data, $status = 200, $contentType = "application/json") {
+        header("Access-Control-Allow-Orgin: *");
+        header("Access-Control-Allow-Methods: *");
+        header("Content-Type: ".$contentType);
         header("HTTP/1.1 " . $status . " " . $this->getStatus($status));
-        echo json_encode($data);
-		die();
+        if ($contentType == "application/json")
+        {
+            echo json_encode($data);
+        } else {
+            echo $data;
+        }
+        die();
     }
 	
 	private function getStatus($code) {
